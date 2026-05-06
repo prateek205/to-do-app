@@ -1,0 +1,19 @@
+{
+  "Task": [
+    {
+      "text": "Project-1 Beauty-Product",
+      "status": "process",
+      "id": 1
+    },
+    {
+      "text": "Project -2 ToDo Application",
+      "status": "completed",
+      "id": 2
+    },
+    {
+      "text": "Project - 3 Blog Application",
+      "status": "process",
+      "id": 3
+    }
+  ]
+}
