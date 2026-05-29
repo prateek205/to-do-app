@@ -8,68 +8,101 @@ const Todo = () => {
     myContext();
 
   return (
-    <section className="h-screen w-full flex items-center justify-start flex-col gap-5 p-10 bg-white text-black dark:bg-gray-900 dark:text-white duration-300">
-      <h1 className="text-4xl font-bold">To-Do Application</h1>
-      <div className="flex gap-5 px-2 py-5 w-full rounded-md">
-        <input
-          type="text"
-          placeholder="Enter the Task..."
-          className="px-2 py-2 w-full text-xl outline-none rounded-md bg-transparent shadow-[0_0_5px_rgb(50,50,50)] dark:shadow-[0_0_5px_rgb(250,250,250)]"
-          value={text}
-          onChange={handleChange}
-        />
-        <button
-          onClick={handleClick}
-          className="py-2 px-10 bg-transparent hover:bg-gray-900 hover:text-white text-black rounded-md dark:hover:bg-gray-800 dark:hover:text-white shadow-[0_0_5px_rgb(50,50,50)] dark:shadow-[0_0_5px_rgb(250,250,250)]"
-        >
-          Add
-        </button>
-      </div>
-      <div className="dark:shadow-[0_0_10px_rgb(250,250,250)] shadow-[0_0_10px_rgb(50,50,50)] shadow-gray-500 w-full h-full flex flex-col gap-5 py-5 px-3 rounded-md">
-        <h1 className="text-xl font-bold">Task List</h1>
-        <div className="flex flex-col gap-2">
-          {list.map((item, index) => {
-            return (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center gap-2 flex-row-reverse">
-                  <ul>
-                    <li
-                      className={
-                        item.status === "completed"
-                          ? "line-through text-gray-500"
-                          : null
-                      }
-                    >
-                      {item.text}
-                    </li>{" "}
-                  </ul>
-                  <div
-                    className={`w-5 h-5 rounded-full ${
+    <section className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex justify-center items-center p-5">
+      <div className="w-full max-w-3xl backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-8 text-white">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-5xl font-bold mb-2">📝 Todo Manager</h1>
+          <p className="text-gray-200">Organize your daily tasks efficiently</p>
+        </div>
+
+        {/* Input Section */}
+        <div className="flex gap-3 mb-8">
+          <input
+            type="text"
+            placeholder="What's your next task?"
+            value={text}
+            onChange={handleChange}
+            className="flex-1 px-4 py-3 rounded-xl bg-white/20 backdrop-blur-md border border-white/20 outline-none placeholder:text-gray-300"
+          />
+
+          <button
+            onClick={handleClick}
+            className="px-8 py-3 rounded-xl bg-white text-purple-600 font-semibold hover:scale-105 duration-300"
+          >
+            Add Task
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="flex justify-between mb-6">
+          <div className="bg-white/10 px-4 py-2 rounded-xl">
+            Total: {list.length}
+          </div>
+
+          <div className="bg-green-500/20 px-4 py-2 rounded-xl">
+            Completed:
+            {list.filter((item) => item.status === "completed").length}
+          </div>
+        </div>
+
+        {/* Task List */}
+        <div className="space-y-4">
+          {list.length === 0 ? (
+            <div className="text-center py-10 text-gray-200">
+              🎉 No Tasks Available
+            </div>
+          ) : (
+            list.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-4 flex justify-between items-center hover:scale-[1.02] duration-300"
+              >
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`px-3 py-1 text-xs rounded-full ${
                       item.status === "completed"
                         ? "bg-green-500"
                         : "bg-orange-500"
                     }`}
-                  ></div>
+                  >
+                    {item.status}
+                  </span>
+
+                  <p
+                    className={`text-lg ${
+                      item.status === "completed"
+                        ? "line-through text-gray-300"
+                        : ""
+                    }`}
+                  >
+                    {item.text}
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
+
+                <div className="flex gap-3">
                   <button
                     onClick={() => updateTask(item)}
-                    className={`text-xl ${item.status === "completed" ? "text-gray-400 cursor-not-allowed" : "hover:text-green-500"}`}
-                    disabled={item.text === "completed"}
+                    disabled={item.status === "completed"}
+                    className={`p-3 rounded-xl ${
+                      item.status === "completed"
+                        ? "bg-gray-500 cursor-not-allowed"
+                        : "bg-green-500 hover:bg-green-600"
+                    }`}
                   >
                     <MdDoneOutline />
                   </button>
 
                   <button
-                    className="text-xl hover:text-red-500"
                     onClick={() => deleteTask(item.id)}
+                    className="p-3 rounded-xl bg-red-500 hover:bg-red-600"
                   >
                     <BsTrash />
                   </button>
                 </div>
               </div>
-            );
-          })}
+            ))
+          )}
         </div>
       </div>
     </section>
